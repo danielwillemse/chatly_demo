@@ -2,7 +2,7 @@ defmodule ChatlyWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ChatlyWeb.RoomChannel
+  channel "room:*", ChatlyWeb.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
