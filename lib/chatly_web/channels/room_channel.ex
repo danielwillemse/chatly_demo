@@ -3,10 +3,16 @@ defmodule ChatlyWeb.RoomChannel do
 
   def join("room:lobby", payload, socket) do
     if authorized?(payload) do
+      send(self(), :after_join)
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
+  end
+
+  def handle_info(:after_join, socket) do
+    push(socket, "shout", %{name: "Chatly", message: "Welcome!"})
+    {:noreply, socket}
   end
 
   # Channels can be used in a request/response fashion
