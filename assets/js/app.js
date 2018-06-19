@@ -18,4 +18,28 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
+import socket from "./socket"
+import $ from "jquery"
+
+let channel = socket.channel("room:lobby", {})
+let list = $('#list')
+let name = $('#name')
+let message = $('#message')
+
+channel.join()
+  .receive("ok", resp => { console.log("Joined successfully", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) })
+
+channel.on('shout', payload => {
+  list.append(`<b>${payload.name}:</b> ${payload.message}<br/>`);
+});
+
+message.on('keypress', event => {
+  if (event.keyCode == 13) {
+    channel.push('shout', {
+      name: name.val(),
+      message: message.val()
+    })
+    message.val('')
+  }
+})
