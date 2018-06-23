@@ -30,7 +30,7 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   ~ % mix phx.gen.channel Room
   ```
 
-  Add jquery to package.json:
+  Add jquery to /assets/package.json:
   ```
   "jquery": ">= 2.1"
   ```
